@@ -16,6 +16,7 @@ module.exports = (robot) ->
  fs = require('fs')
  util = require('util')
  JSONPATH = 'DATA.json'
+ WORK_ITEMS = ['TASK', 'PROJECT']
 
  robot.respond /Manny list all (.*)s assigned to (.*)/i, (res) ->
         itemType = res.match[1]
@@ -204,4 +205,24 @@ module.exports = (robot) ->
                 res.reply "Looks like no backlog with name #{backlogName} as such..! \n or no task under #{backlogName}"
             else 
                 res.reply "Here are the list of tasks under  #{backlogName} \n #{workitemsList}"
+ robot.respond /Create[ \t]([^\s]+)[ \t](.*)(?:for)(.*)/i, (res) ->
+        type = res.match[1]
+        typeDetail = res.match[2]
+        user = res.match[3]
+    
+        if WORK_ITEMS.indexOf(type.toUppercase())
+            
+            res.reply "I can create for you"
+        else
+            res.reply "Creation of #{type} is not available at this time"
+ robot.respond /Create[ \t]([^\s]+)[ \t](.*)/i, (res) ->
+        type = res.match[1]
+        typeDetail = res.match[2]
+        user = res.match[3]
         
+        
+        if WORK_ITEMS.indexOf(type.toUppercase())
+            res.reply "I can create for you"
+        else
+            res.reply "Creation of #{type} is not available at this time"
+    
